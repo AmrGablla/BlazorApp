@@ -1,0 +1,72 @@
+﻿@page "/counter"
+
+@inject EmployeeService service
+@inject NavigationManager NavigationManager
+
+
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+
+<RadzenTemplateForm Data="@employee" Submit="@((Employee args) => { Submit(args); })">
+    <div class="row">
+        <div class="col-md-6"> 
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="First Name" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="FirstName" @bind-Value="employee.FirstName" />
+                        <RadzenRequiredValidator Component="FirstName" Text="First name is required"   Style="position: inherit" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Last Name" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="LastName" @bind-Value="employee.LastName" />
+                        <RadzenRequiredValidator Component="LastName" Text="Last name is required" Style="position: inherit" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Birth Date" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenDatePicker style="width: 100%;" Name="BirthDate" @bind-Value="employee.BirthDate" />
+                    </div>
+                </div>
+                 
+                 
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
+        </div>
+    </div>
+</RadzenTemplateForm>
+
+
+@code {
+
+
+    Employee employee = new Employee();
+
+    
+
+    void Submit(Employee arg)
+    {
+        service.Add(arg);
+        NavigationManager.NavigateTo("fetchdata");
+    }
+
+    void Cancel()
+    {
+        //
+    }
+}

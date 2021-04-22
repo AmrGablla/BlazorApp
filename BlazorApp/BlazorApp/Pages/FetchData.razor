@@ -1,0 +1,36 @@
+﻿@page "/fetchdata"
+
+
+@inject EmployeeService service
+
+<h1>Employee Page</h1>
+ 
+<RadzenGrid Count="@count" style="height:400px" Data="@employees" LoadData="@LoadData" AllowSorting="false" AllowFiltering="false" TItem="Employee" ColumnWidth="150px">
+    <Columns>
+        <RadzenGridColumn TItem="Employee" Property="FirstName" Title="First Name" />
+        <RadzenGridColumn TItem="Employee" Property="LastName" Title="Last Name" />
+        <RadzenGridColumn TItem="Employee" Property="BirthDate" Title="Birth Date">
+            <Template Context="data">
+                @String.Format("{0:d}", data.BirthDate)
+            </Template>
+        </RadzenGridColumn>
+    </Columns>
+</RadzenGrid>
+
+@code {
+    int count;
+    IEnumerable<Employee> employees;
+
+    async Task LoadData(LoadDataArgs args)
+    {
+        employees = service.GetEmployees();
+        count = 1;
+
+        StateHasChanged();
+    }
+
+    void OnClick()
+    {
+
+    }
+}
